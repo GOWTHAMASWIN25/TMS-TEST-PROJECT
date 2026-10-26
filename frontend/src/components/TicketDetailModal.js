@@ -94,8 +94,9 @@ const TicketDetailModal = ({ complaint, currentUser, allUsers, onClose, onRefres
   };
 
   const ticketCode = `#TMS-${complaint._id ? complaint._id.slice(-6).toUpperCase() : '0000'}`;
+  const backendBase = (process.env.REACT_APP_API_URL || 'http://localhost:5000/api').replace(/\/api\/?$/, '');
   const attachmentUrl = complaint.attachment
-    ? `http://localhost:5000${complaint.attachment.startsWith('/') ? '' : '/'}${complaint.attachment}`
+    ? `${backendBase}${complaint.attachment.startsWith('/') ? '' : '/'}${complaint.attachment}`
     : null;
 
   return (

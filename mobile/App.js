@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import * as SecureStore from 'expo-secure-store';
+import storage from './src/storage';
 import { StatusBar } from 'expo-status-bar';
 import { Button, ErrorBanner } from './src/components/UI';
 import { authApi, complaintApi, getErrorMessage, setAuthToken } from './src/api';
-import { colors } from './src/theme';
+import { colors, shadows } from './src/theme';
 import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import RaiseTicketScreen from './src/screens/RaiseTicketScreen';
@@ -31,32 +31,47 @@ function HomeTabs({ user, onLogout, onRefresh, refreshKey, stats, recent, overvi
     >
       <Tabs.Screen
         name="Home"
-        options={{ tabBarIcon: ({ color }) => <Text style={[styles.tabIcon, { color }]}>⌂</Text> }}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color }) => <Text style={[styles.tabIcon, { color }]}>⌂</Text>,
+        }}
       >
         {(props) => <HomeScreen {...props} user={user} stats={stats} recent={recent} onRefresh={onRefresh} onNavigate={(screen) => props.navigation.navigate(screen)} overviewError={overviewError} />}
       </Tabs.Screen>
       <Tabs.Screen
         name="Tickets"
-        options={{ tabBarIcon: ({ color }) => <Text style={[styles.tabIcon, { color }]}>▤</Text> }}
+        options={{
+          tabBarLabel: 'Tickets',
+          tabBarIcon: ({ color }) => <Text style={[styles.tabIcon, { color }]}>📋</Text>,
+        }}
       >
         {(props) => <TicketsScreen {...props} user={user} refreshKey={refreshKey} />}
       </Tabs.Screen>
       <Tabs.Screen
         name="Raise"
-        options={{ tabBarIcon: ({ color }) => <Text style={[styles.tabIcon, { color }]}>＋</Text> }}
+        options={{
+          tabBarLabel: 'Raise',
+          tabBarIcon: ({ color }) => <Text style={[styles.tabIcon, { color }]}>➕</Text>,
+        }}
       >
         {(props) => <RaiseTicketScreen {...props} user={user} onSubmitted={() => { onRefresh(); props.navigation.navigate('Tickets'); }} />}
       </Tabs.Screen>
       <Tabs.Screen
         name="Account"
-        options={{ tabBarIcon: ({ color }) => <Text style={[styles.tabIcon, { color }]}>●</Text> }}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color }) => <Text style={[styles.tabIcon, { color }]}>👤</Text>,
+        }}
       >
         {() => <AccountScreen user={user} onLogout={onLogout} />}
       </Tabs.Screen>
       {user?.role === 'SuperAdmin' && (
         <Tabs.Screen
           name="Admin"
-          options={{ tabBarIcon: ({ color }) => <Text style={[styles.tabIcon, { color }]}>⚙</Text> }}
+          options={{
+            tabBarLabel: 'Admin',
+            tabBarIcon: ({ color }) => <Text style={[styles.tabIcon, { color }]}>⚙️</Text>,
+          }}
         >
           {() => <AdminScreen user={user} />}
         </Tabs.Screen>
@@ -68,11 +83,23 @@ function HomeTabs({ user, onLogout, onRefresh, refreshKey, stats, recent, overvi
 function AccountScreen({ user, onLogout }) {
   return (
     <SafeAreaView style={styles.account} edges={['top']}>
-      <View style={styles.accountAvatar}><Text style={styles.accountAvatarText}>{(user?.username || user?.name || 'G').charAt(0).toUpperCase()}</Text></View>
-      <Text style={styles.accountName}>{user?.username || user?.name || 'GoExpo user'}</Text>
-      <Text style={styles.accountEmail}>{user?.email}</Text>
-      <View style={styles.roleBadge}><Text style={styles.roleText}>{user?.role || 'User'}</Text></View>
-      <Pressable style={styles.logout} onPress={onLogout}><Text style={styles.logoutText}>Sign out</Text></Pressable>
+      <View style={styles.profileCard}>
+        <View style={styles.accountAvatar}>
+          <Text style={styles.accountAvatarText}>
+            {(user?.username || user?.name || 'G').charAt(0).toUpperCase()}
+          </Text>
+        </View>
+        <Text style={styles.accountName}>{user?.username || user?.name || 'TMS User'}</Text>
+        <Text style={styles.accountEmail}>{user?.email}</Text>
+        <View style={styles.roleBadge}>
+          <View style={styles.roleDot} />
+          <Text style={styles.roleText}>{user?.role || 'User'}</Text>
+        </View>
+      </View>
+      <Pressable style={styles.logout} onPress={onLogout}>
+        <Text style={styles.logoutIcon}>🚪</Text>
+        <Text style={styles.logoutText}>Sign Out of Session</Text>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -93,7 +120,7 @@ export default function App() {
       setBooting(true);
       setBootError('');
       try {
-        const token = await SecureStore.getItemAsync('goexpo-token');
+        const token = await storage.getItem('goexpo-token');
         if (token) {
           setAuthToken(token);
           try {
@@ -101,7 +128,7 @@ export default function App() {
             if (active) setUser(response.data);
           } catch (error) {
             if (error.response?.status === 401 || error.response?.status === 403) {
-              await SecureStore.deleteItemAsync('goexpo-token');
+              await storage.deleteItem('goexpo-token');
               setAuthToken(null);
             } else if (active) {
               setBootError(getErrorMessage(error, 'Could not restore your session.'));
@@ -139,7 +166,7 @@ export default function App() {
       const response = await authApi.login(email, password);
       const { token, user: userData } = response.data;
       if (!token || !userData) throw new Error('The server returned an invalid sign-in response.');
-      await SecureStore.setItemAsync('goexpo-token', token);
+      await storage.setItem('goexpo-token', token);
       setAuthToken(token);
       setUser(userData);
     } catch (error) {
@@ -149,7 +176,7 @@ export default function App() {
 
   const logout = async () => {
     try {
-      await SecureStore.deleteItemAsync('goexpo-token');
+      await storage.deleteItem('goexpo-token');
       setAuthToken(null);
       setUser(null);
       setBootError('');
@@ -201,22 +228,73 @@ export default function App() {
 
 const styles = StyleSheet.create({
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.background },
-  tabBar: { height: 68, paddingTop: 7, paddingBottom: 8, borderTopColor: colors.line, backgroundColor: colors.surface },
-  tabLabel: { fontWeight: '600', fontSize: 10 },
-  tabIcon: { fontSize: 22, lineHeight: 24 },
-  account: { flex: 1, backgroundColor: colors.background, alignItems: 'center', padding: 25, paddingTop: 75 },
-  accountAvatar: { width: 82, height: 82, borderRadius: 29, backgroundColor: colors.primaryLight, alignItems: 'center', justifyContent: 'center' },
-  accountAvatarText: { color: colors.primary, fontSize: 34, fontWeight: '800' },
-  accountName: { color: colors.ink, fontSize: 23, fontWeight: '800', marginTop: 18 },
-  accountEmail: { color: colors.muted, fontSize: 14, marginTop: 6 },
-  roleBadge: { backgroundColor: colors.primaryLight, borderRadius: 20, paddingVertical: 8, paddingHorizontal: 14, marginTop: 17 },
-  roleText: { color: colors.primary, fontSize: 13, fontWeight: '700' },
-  logout: { marginTop: 40, minHeight: 52, width: '100%', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#F0CDCD', backgroundColor: '#FFF5F5', borderRadius: 15 },
-  logoutText: { color: colors.danger, fontSize: 15, fontWeight: '700' },
+  tabBar: {
+    height: Platform.OS === 'ios' ? 84 : 70,
+    paddingTop: 8,
+    paddingBottom: Platform.OS === 'ios' ? 24 : 10,
+    borderTopColor: colors.line,
+    borderTopWidth: 1,
+    backgroundColor: '#FFFFFF',
+    ...shadows.md,
+  },
+  tabLabel: { fontWeight: '700', fontSize: 11, marginTop: 2 },
+  tabIcon: { fontSize: 20 },
+  account: { flex: 1, backgroundColor: colors.background, padding: 22, paddingTop: 40 },
+  profileCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: colors.line,
+    padding: 26,
+    alignItems: 'center',
+    ...shadows.sm,
+  },
+  accountAvatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 28,
+    backgroundColor: colors.primaryLight,
+    borderWidth: 2,
+    borderColor: colors.primaryMuted,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  accountAvatarText: { color: colors.primary, fontSize: 32, fontWeight: '900' },
+  accountName: { color: colors.ink, fontSize: 22, fontWeight: '900', marginTop: 16, letterSpacing: -0.4 },
+  accountEmail: { color: colors.muted, fontSize: 13, marginTop: 4, fontWeight: '500' },
+  roleBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.primaryLight,
+    borderWidth: 1,
+    borderColor: colors.primaryMuted,
+    borderRadius: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    marginTop: 16,
+    gap: 6,
+  },
+  roleDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: colors.primary },
+  roleText: { color: colors.primary, fontSize: 12, fontWeight: '800' },
+  logout: {
+    marginTop: 24,
+    minHeight: 52,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#FECACA',
+    backgroundColor: colors.dangerLight,
+    borderRadius: 16,
+    gap: 8,
+  },
+  logoutIcon: { fontSize: 16 },
+  logoutText: { color: colors.danger, fontSize: 14, fontWeight: '800' },
   recovery: { flex: 1, backgroundColor: colors.background, justifyContent: 'center', padding: 26 },
   recoveryMark: { width: 54, height: 54, borderRadius: 18, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', marginBottom: 24 },
   recoveryMarkText: { color: '#FFFFFF', fontSize: 28, fontWeight: '800' },
-  recoveryTitle: { color: colors.ink, fontSize: 28, fontWeight: '800' },
-  recoveryCopy: { color: colors.muted, fontSize: 15, lineHeight: 22, marginTop: 10, marginBottom: 24 },
+  recoveryTitle: { color: colors.ink, fontSize: 28, fontWeight: '900' },
+  recoveryCopy: { color: colors.muted, fontSize: 14, lineHeight: 22, marginTop: 8, marginBottom: 24 },
   recoveryButton: { marginBottom: 11 },
 });
