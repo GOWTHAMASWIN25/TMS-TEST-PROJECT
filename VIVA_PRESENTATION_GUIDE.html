@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TMS Project - Viva & Presentation Guide</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+    @page {
+      size: A4;
+      margin: 15mm 15mm 15mm 15mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #0F172A;
+      background: #FFFFFF;
+      line-height: 1.55;
+      font-size: 13px;
+    }
+
+    .header-banner {
+      background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+      color: #FFFFFF;
+      padding: 24px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .header-banner h1 {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+
+    .header-banner p {
+      font-size: 13px;
+      opacity: 0.92;
+      font-weight: 500;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .section {
+      margin-bottom: 22px;
+      page-break-inside: avoid;
+    }
+
+    h2 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #1E3A8A;
+      border-bottom: 2px solid #DBEAFE;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1E293B;
+      margin: 10px 0 6px 0;
+    }
+
+    .card {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .speech-box {
+      background: #EFF6FF;
+      border-left: 4px solid #3B82F6;
+      border-radius: 8px;
+      padding: 14px;
+      margin: 10px 0;
+      font-style: normal;
+    }
+
+    .speech-box .label {
+      font-size: 11px;
+      font-weight: 800;
+      color: #1D4ED8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .speech-box .text {
+      font-size: 13px;
+      color: #1E293B;
+      line-height: 1.6;
+    }
+
+    .tamil-tip {
+      background: #FFFBEB;
+      border-left: 4px solid #F59E0B;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #78350F;
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 12px;
+    }
+
+    th, td {
+      border: 1px solid #CBD5E1;
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    th {
+      background: #F1F5F9;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    .flow-steps {
+      display: flex;
+      gap: 8px;
+      margin: 12px 0;
+      flex-wrap: wrap;
+    }
+
+    .flow-step {
+      flex: 1;
+      min-width: 120px;
+      background: #FFFFFF;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .flow-step .num {
+      width: 22px;
+      height: 22px;
+      background: #3B82F6;
+      color: white;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .flow-step .title {
+      font-weight: 700;
+      font-size: 12px;
+      color: #0F172A;
+    }
+
+    .flow-step .desc {
+      font-size: 11px;
+      color: #64748B;
+      margin-top: 2px;
+    }
+
+    .qa-box {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .qa-box .q {
+      font-weight: 800;
+      color: #1E3A8A;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .qa-box .a {
+      color: #334155;
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+
+    .highlight {
+      background: #FEF08A;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    .page-break {
+      page-break-after: always;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Banner -->
+  <div class="header-banner">
+    <h1>TMS — Campus Ticket & Complaint Management System</h1>
+    <p>Complete Viva Voice & Presentation Script (Simple Spoken English + Technical Q&A)</p>
+    <div class="badge-row">
+      <span class="badge">MERN Stack (MongoDB, Express, React, Node.js)</span>
+      <span class="badge">React Native Mobile (Expo SDK 58)</span>
+      <span class="badge">JWT + RBAC Authentication</span>
+      <span class="badge">Cloud MongoDB Atlas</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1: 1-MINUTE ELEVATOR PITCH -->
+  <div class="section">
+    <h2>1. The 60-Second Presentation Pitch (How to Start)</h2>
+    <p>Memorize or speak these exact lines when the examiner asks: <em>"Introduce yourself and explain your project."</em></p>
+    
+    <div class="speech-box">
+      <div class="label">🗣️ Speak this in Viva:</div>
+      <div class="text">
+        "Good morning respected examiners. My project is <strong>TMS — Ticket Management System</strong>. It is a full-stack, cross-platform campus facility maintenance system built using the <strong>MERN stack</strong> and <strong>React Native Expo</strong>.<br><br>
+        In colleges and workplaces, reporting infrastructure issues like damaged computers, Wi-Fi connectivity problems, electrical faults, or plumbing issues is traditionally done through paper registers or manual phone calls. This results in lost complaints, long delays, and no accountability.<br><br>
+        To solve this, our project delivers an end-to-end digital platform where students and staff can raise a ticket in under 30 seconds with photos, administrators can assign staff with one click, and technicians can resolve and close tickets with real-time status tracking."
+      </div>
+    </div>
+
+    <div class="tamil-tip">
+      💡 <strong>Tamil Tip:</strong> ஆரம்பிக்கும் போது பதட்டப்படாமல் இந்த 3 விஷயங்களை சொல்லுங்கள்: 1. Problem (Manual registers delay complaints), 2. Solution (Digital ticketing web + mobile app), 3. Tech Stack (MERN + React Native).
+    </div>
+  </div>
+
+  <!-- SECTION 2: OBJECTIVES & PROBLEM STATEMENT -->
+  <div class="section">
+    <h2>2. Problem Statement vs. Our Solution</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 45%;">Traditional / Existing System</th>
+          <th style="width: 55%;">Our Proposed TMS System</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Manual register books or verbal complaints.</td>
+          <td><strong>Digital 24/7 Portal</strong> accessible via Web and Android/iOS Mobile.</td>
+        </tr>
+        <tr>
+          <td>Complaints get lost or ignored without proof.</td>
+          <td><strong>Evidence Upload</strong> (Photos/Documents attached to tickets).</td>
+        </tr>
+        <tr>
+          <td>No transparency on who is fixing the issue.</td>
+          <td><strong>Role-Based Assignment</strong> (Assign to Electrician, Plumber, Network staff).</td>
+        </tr>
+        <tr>
+          <td>No tracking of resolution time or user feedback.</td>
+          <td><strong>Live Status Lifecycle</strong> (Pending &rarr; Assigned &rarr; In-Progress &rarr; Resolved).</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 3: SYSTEM ARCHITECTURE & TECH STACK -->
+  <div class="section">
+    <h2>3. Technology Stack & Why We Chose It</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Technology</th>
+          <th>Why We Used It (Examiner Question)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Web Frontend</strong></td>
+          <td>React 18, React Router v6, Axios, Vanilla CSS</td>
+          <td>Fast single-page application (SPA), reusable components, dynamic dashboards.</td>
+        </tr>
+        <tr>
+          <td><strong>Mobile App</strong></td>
+          <td>React Native, Expo SDK 58</td>
+          <td>Single codebase for Android and iOS, hardware photo attachments, cross-platform storage.</td>
+        </tr>
+        <tr>
+          <td><strong>Backend API</strong></td>
+          <td>Node.js & Express.js</td>
+          <td>Non-blocking asynchronous REST API, high concurrency, seamless JSON handling.</td>
+        </tr>
+        <tr>
+          <td><strong>Database</strong></td>
+          <td>MongoDB Atlas (Cloud NoSQL)</td>
+          <td>Flexible schema, JSON document storage, high scalability, 24/7 cloud availability.</td>
+        </tr>
+        <tr>
+          <td><strong>Security</strong></td>
+          <td>JWT (JSON Web Token) & bcryptjs</td>
+          <td>Stateless authentication with 7-day token expiry, salted password encryption.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- SECTION 4: USER ROLES & ACCESS CONTROL -->
+  <div class="section">
+    <h2>4. Role-Based Access Control (RBAC)</h2>
+    <p>Our system strictly manages permissions across 3 tiers of users:</p>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="num">1</div>
+        <div class="title">SuperAdmin</div>
+        <div class="desc">Full campus authority. Manages departments, blocks, rooms, users, assigns staff, and exports reports.</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">2</div>
+        <div class="title">Field Technicians</div>
+        <div class="desc">Electrician, Plumber, Network, Hardware. Views assigned tickets and updates status to In-Progress / Resolved.</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">3</div>
+        <div class="title">End Users</div>
+        <div class="desc">Students, faculty, staff. Raises tickets with photo evidence, tracks status, and submits 1-5 star ratings.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: TICKET LIFECYCLE -->
+  <div class="section">
+    <h2>5. Ticket Lifecycle (How It Works)</h2>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="num" style="background:#F59E0B;">1</div>
+        <div class="title" style="color:#B45309;">Pending</div>
+        <div class="desc">User creates ticket with Block, Room & Category.</div>
+      </div>
+      <div class="flow-step">
+        <div class="num" style="background:#8B5CF6;">2</div>
+        <div class="title" style="color:#6D28D9;">Assigned</div>
+        <div class="desc">Admin reviews and assigns ticket to specialized staff.</div>
+      </div>
+      <div class="flow-step">
+        <div class="num" style="background:#0284C7;">3</div>
+        <div class="title" style="color:#0369A1;">In-Progress</div>
+        <div class="desc">Staff inspects location and begins repair work.</div>
+      </div>
+      <div class="flow-step">
+        <div class="num" style="background:#10B981;">4</div>
+        <div class="title" style="color:#047857;">Closed / Resolved</div>
+        <div class="desc">Work completed. User submits rating and feedback.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: TOP 15 VIVA QUESTIONS & ANSWERS -->
+  <div class="section">
+    <h2>6. Most Frequently Asked Viva Questions & Answers</h2>
+
+    <div class="qa-box">
+      <div class="q">Q1: What is the main purpose of this project?</div>
+      <div class="a"><strong>Answer:</strong> The main purpose is to automate and streamline campus facility maintenance by replacing paper-based complaints with an online ticketing platform supporting real-time tracking, photo attachments, and staff assignments across web and mobile.</div>
+    </div>
+
+    <div class="qa-box">
+      <div class="q">Q2: Why did you choose MERN stack instead of traditional PHP/MySQL or Java?</div>
+      <div class="a"><strong>Answer:</strong> MERN uses JavaScript end-to-end across frontend, backend, and database queries. It provides high performance with Node's non-blocking I/O, rapid UI updates with React's Virtual DOM, and schema flexibility with MongoDB.</div>
+    </div>
+
+    <div class="qa-box">
+      <div class="q">Q3: How is authentication handled in your project?</div>
+      <div class="a"><strong>Answer:</strong> We use <strong>JWT (JSON Web Tokens)</strong>. When a user logs in with email and password, the server validates password using <code>bcrypt.compare()</code>. If valid, the server signs a JWT containing the user ID, email, and role. The client stores this token in localStorage/SecureStore and sends it in the HTTP <code>Authorization: Bearer &lt;token&gt;</code> header for subsequent API requests.</div>
+    </div>
+
+    <div class="qa-box">
+      <div class="q">Q4: How do you handle password security?</div>
+      <div class="a"><strong>Answer:</strong> Passwords are never stored in plain text. We hash them using <code>bcryptjs</code> with 10 salt rounds before saving to MongoDB. Even database administrators cannot see the raw passwords.</div>
+    </div>
+
+    <div class="qa-box">
+      <div class="q">Q5: What database collections (models) do you have?</div>
+      <div class="a"><strong>Answer:</strong> We have 6 main collections in MongoDB:
+        <strong>User</strong> (credentials, role, department),
+        <strong>Complaint</strong> (ticket title, category, block, room, status, priority, attachment),
+        <strong>Department</strong>, <strong>Programme</strong>, <strong>Block</strong>, and <strong>Room</strong>.
+      </div>
+    </div>
+
+    <div class="qa-box">
+      <div class="q">Q6: How do file uploads work for ticket attachments?</div>
+      <div class="a"><strong>Answer:</strong> We use <strong>Multer</strong> middleware on Express. Multer intercepts multipart/form-data requests, renames the uploaded image with a unique timestamp, and stores it in the server's <code>/uploads</code> directory while saving the relative file path in the MongoDB document.</div>
+    </div>
+
+    <div class="qa-box">
+      <div class="q">Q7: How does the Mobile App communicate with the Backend?</div>
+      <div class="a"><strong>Answer:</strong> The React Native mobile app communicates with the Node.js backend using <strong>Axios</strong> HTTP requests pointing to our REST API endpoint (e.g. <code>https://tms-1-ful8.onrender.com/api</code>). It stores the session token using <strong>Expo SecureStore</strong> on mobile and <strong>localStorage</strong> on web.</div>
+    </div>
+
+    <div class="qa-box">
+      <div class="q">Q8: What is Expo SDK 58 and why did you use it?</div>
+      <div class="a"><strong>Answer:</strong> Expo is a modern React Native framework that provides native modules for camera, file system, document picker, and secure storage without needing complex native Xcode or Android Studio configurations. SDK 58 uses the latest React Native 0.88 with improved performance.</div>
+    </div>
+
+    <div class="qa-box">
+      <div class="q">Q9: What challenges did you face during development?</div>
+      <div class="a"><strong>Answer:</strong> Three main challenges:
+        1. Configuring cross-platform storage so that token storage works on both mobile native hardware and web browsers.
+        2. Managing cascading dropdowns (selecting a department filters the blocks, which then filters rooms).
+        3. Protecting routes using middleware so unauthorized users cannot access SuperAdmin management panels.
+      </div>
+    </div>
+
+    <div class="qa-box">
+      <div class="q">Q10: What are the future enhancements for this project?</div>
+      <div class="a"><strong>Answer:</strong> Future enhancements include push notifications via Firebase Cloud Messaging, AI-based automatic complaint classification, SLA (Service Level Agreement) breach countdown timers, and QR code stickers on classroom doors for instant room ticket scanning.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: DEMO WALKTHROUGH CHECKLIST -->
+  <div class="section">
+    <h2>7. Live Demo Steps During Viva (Follow in Order)</h2>
+    <div class="card">
+      <ol style="padding-left: 20px; line-height: 1.8;">
+        <li><strong>Step 1:</strong> Open Web Dashboard at <code>http://localhost:3000</code> or Mobile App.</li>
+        <li><strong>Step 2:</strong> Login as <strong>SuperAdmin</strong> (<code>admin@example.com</code> / <code>Passw0rd!</code>).</li>
+        <li><strong>Step 3:</strong> Show the metrics overview (Total complaints, Pending, Assigned, Resolved).</li>
+        <li><strong>Step 4:</strong> Show Master Data (Departments, Blocks, Rooms).</li>
+        <li><strong>Step 5:</strong> Login as a Student / User (<code>user@example.com</code>).</li>
+        <li><strong>Step 6:</strong> Raise a new complaint (Select CSE &rarr; IT Block &rarr; LAB-101 &rarr; Hardware Issue).</li>
+        <li><strong>Step 7:</strong> Switch back to SuperAdmin &rarr; Assign complaint to Technician.</li>
+        <li><strong>Step 8:</strong> Login as Technician (<code>Electrician@example.com</code>) &rarr; Change status to <strong>Closed</strong>.</li>
+      </ol>
+    </div>
+  </div>
+
+</body>
+</html>
